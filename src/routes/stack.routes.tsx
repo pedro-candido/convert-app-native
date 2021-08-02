@@ -1,14 +1,15 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import { Home } from '../pages'
-import { Convert } from '../pages/Convert'
+import { Home } from '../screens'
+import { Convert } from '../screens/Convert'
 
 const StackRoutes = createStackNavigator()
 
 export const AppRoutes: React.FC = () => {
     return (
         <StackRoutes.Navigator 
+            initialRouteName="Homepage"
             headerMode="none" 
             screenOptions={{ cardStyle: { backgroundColor: '#fff'}}}
         >
