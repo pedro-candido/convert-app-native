@@ -1,10 +1,12 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
-import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, TextInput, TouchableWithoutFeedback, Keyboard, ScrollView, KeyboardAvoidingView, Platform, TextInputTextInputEventData } from 'react-native'
+import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, Picker } from 'react-native'
 
 export const Convert = () => {
     const [ isFocused, setIsFocused ] = useState(false)
     const [ value, setValue ] = useState('')
+    const [ firstCurrency, setFirstCurrency ] = useState('')
+    const [ secondCurrency, setSecondCurrency ] = useState('')
 
     const navigation = useNavigation()
 
@@ -19,6 +21,14 @@ export const Convert = () => {
             return alert('Preenchido')
     }
 
+    const handleFirstPickerChange = (text: string) => {
+        setFirstCurrency(text)
+    }
+
+    const handleSecondPickerChange = (text: string) => {
+        setSecondCurrency(text)
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
@@ -26,9 +36,9 @@ export const Convert = () => {
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                    <View>
+                    <View style={styles.content}>
                         <SafeAreaView style={styles.convertContainer}>
-                            <Text>Hello World</Text>
+                            <Text style={styles.title}>Valor para converter</Text>
                             <TextInput 
                                 onFocus={() => setIsFocused(true)}
                                 onBlur={() => setIsFocused(false)}
@@ -39,6 +49,34 @@ export const Convert = () => {
                                 onChangeText={handleChange}
                             />
                         </SafeAreaView>
+                        <View style={styles.convertTo}>
+                            <SafeAreaView>
+                                <Text>Converter de:</Text>
+                                <Picker 
+                                    style={styles.picker}
+                                    selectedValue={firstCurrency}
+                                    onValueChange={handleFirstPickerChange}
+                                >
+                                    <Picker.Item label="-" value="" />
+                                    <Picker.Item label="Real" value="BRL" />
+                                    <Picker.Item label="Dolar" value="USD" />
+                                    <Picker.Item label="Euro" value="EUR" />
+                                </Picker>
+                            </SafeAreaView>
+                            <SafeAreaView>
+                                <Text>Converter para:</Text>
+                                <Picker 
+                                    style={styles.picker}
+                                    selectedValue={secondCurrency}
+                                    onValueChange={handleSecondPickerChange}
+                                >
+                                    <Picker.Item label="-" value="BRL" />
+                                    <Picker.Item label="Real" value="BRL" />
+                                    <Picker.Item label="Dolar" value="USD" />
+                                    <Picker.Item label="Euro" value="EUR" />
+                                </Picker>
+                            </SafeAreaView>
+                        </View>
                         <SafeAreaView style={styles.buttonsWrapper}>
                             <TouchableOpacity style={styles.button} onPress={handleBack}>
                                 <Text style={styles.buttonText}>Back</Text>
@@ -60,12 +98,18 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-around',
         width: '100%',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     text: {
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 30
+    },
+    title: {
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10
     },
     button: {
         backgroundColor: '#fff',
@@ -80,12 +124,10 @@ const styles = StyleSheet.create({
     buttonsWrapper: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        marginBottom: '10%',
     },
     convertContainer: {
         alignContent: 'center',
         alignSelf: 'center',
-        height: '80%',
         flexDirection: 'column',
     },
     input: {
@@ -97,8 +139,26 @@ const styles = StyleSheet.create({
         color: '#0c0c0c',
         fontWeight: 'bold',
         minWidth: '80%',
+        fontSize: 24
     },
     isFocused: {
         color: 'purple',
     },
+    content: {
+        display: 'flex',
+        alignContent: 'center',
+        justifyContent: 'space-between',
+        height: '90%'
+    },
+    convertTo: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    },
+    picker: {
+        color: '#fff'
+    },
+    pickerItem: {
+        color: '#fff'
+    }
 })

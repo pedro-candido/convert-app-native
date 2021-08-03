@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
     text: {
         color: '#fff',
         fontWeight: 'bold',
-        fontFamily: 'Arial',
         fontSize: 30
     },
     image: {
@@ -62,7 +61,6 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#9022ff',
-        fontFamily: 'Arial',
         fontWeight: 'bold',
         fontSize: 30
     }
