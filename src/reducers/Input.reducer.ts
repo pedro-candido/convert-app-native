@@ -3,18 +3,22 @@ import { createSlice } from '@reduxjs/toolkit'
 const InputReducer = createSlice({
   initialState: {
     value: 0,
-    currency: ''
+    firstCurrency: '-',
+    secondCurrency: '-'
   },
   name: 'inputReducer',
   reducers: {
-    setValue (state, action) {
+    setValueToConvert (state, action) {
       state.value = action.payload
     },
-    setCurrency (state, action) {
-      state.value = action.payload
-    }
+    setFirstCurrency (state, action) {
+      state.firstCurrency = action.payload
+    },
+    setSecondCurrency (state, action) {
+      state.secondCurrency = action.payload
+    },
   }
 })
 
 export default InputReducer.reducer
-export const { setCurrency, setValue } = InputReducer.actions
+export const { setFirstCurrency, setSecondCurrency, setValueToConvert } = InputReducer.actions
